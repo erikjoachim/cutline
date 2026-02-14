@@ -1,0 +1,35 @@
+<Project>
+  <!-- 
+    Centralized Build Configuration
+    This file is automatically imported by all projects in this directory and subdirectories.
+    
+    Package versions are managed centrally in Directory.Packages.props.
+    
+    CSharpier Build Output:
+    - Information: When CSharpier runs and which files it formats
+    - Warnings: If CSharpier tool is not installed (dotnet tool restore needed)
+    - Errors: If formatting fails
+    
+    To fail the build on unformatted files (for CI), add:
+    <CSharpier_Check>true</CSharpier_Check>
+  -->
+  <PropertyGroup>
+    <!-- Enable verbose logging so developers see CSharpier output during build -->
+    <CSharpier_LogLevel>Information</CSharpier_LogLevel>
+    
+    <!-- Uncomment the line below for CI/CD to fail build on unformatted files -->
+    <!-- <CSharpier_Check>true</CSharpier_Check> -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- CSharpier is referenced centrally for all projects to ensure consistent formatting -->
+    <PackageReference Include="CSharpier.MsBuild">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    
+    <!-- Shared API packages - only for Web SDK projects -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'" />
+    <PackageReference Include="Scalar.AspNetCore" Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'" />
+  </ItemGroup>
+</Project>

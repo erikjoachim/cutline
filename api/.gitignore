@@ -1,0 +1,30 @@
+# .NET build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+
+# Local development settings
+appsettings.Development.json
+appsettings.Local.json
+
+# IDE
+.vs/
+.vscode/
+*.swp
+*.swo
+
+# NuGet
+*.nupkg
+packages/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db

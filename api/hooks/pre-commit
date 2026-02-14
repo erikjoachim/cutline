@@ -1,0 +1,50 @@
+#!/bin/sh
+# csharpier pre-commit hook
+# stash unstaged changes, run csharpier on staged c# files, and restash
+
+# navigate to api directory where dotnet tools are located
+# when installed to .git/hooks, we need to go up to root then into api
+if [ -d "api/.config" ]; then
+    cd api || exit 1
+elif [ -d ".config" ]; then
+    # already in api directory
+    :
+else
+    echo "error: cannot find api directory with .config/dotnet-tools.json"
+    exit 1
+fi
+
+# stash unstaged changes from root
+git stash -q --keep-index
+
+# get list of staged c# files (paths from repo root)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep '^api/.*\.cs$' || true)
+
+if [ -n "$STAGED_FILES" ]; then
+    echo "running csharpier on staged files..."
+    
+    # restore tools if needed
+    if ! dotnet tool list --local 2>/dev/null | grep -q csharpier; then
+        echo "restoring dotnet tools..."
+        dotnet tool restore
+    fi
+    
+    # format each staged file (strip api/ prefix since we're in api dir)
+    echo "$STAGED_FILES" | sed 's/^api\///' | while read -r file; do
+        if [ -f "$file" ]; then
+            dotnet csharpier "$file"
+        fi
+    done
+    
+    # re-stage formatted files (add api/ prefix back for git add from root)
+    echo "$STAGED_FILES" | while read -r file; do
+        if [ -f "$file" ]; then
+            git add "$file"
+        fi
+    done
+fi
+
+# unstash unstaged changes
+git stash pop -q
+
+exit 0

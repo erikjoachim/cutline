@@ -1,0 +1,26 @@
+<Project>
+  <!--
+    Central Package Management (CPM)
+    
+    This file defines all package versions centrally. When adding a new package:
+    1. Add it here first: <PackageVersion Include="PackageName" Version="x.y.z" />
+    2. Reference it in .csproj without version: <PackageReference Include="PackageName" />
+    
+    Benefits:
+    - Consistent versions across all projects
+    - Single source of truth for package versions
+    - Build fails with clear error if version not defined here
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <!-- Code Formatting -->
+    <PackageVersion Include="CSharpier.MsBuild" Version="0.30.0" />
+    
+    <!-- API / Web -->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
+</Project>
