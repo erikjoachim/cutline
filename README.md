@@ -6,10 +6,8 @@ a fantasy golf league app built around one simple idea:
 
 that's it.
 
-no salaries.  
 no betting.  
 no stroke-by-stroke math.  
-no "projected ownership percentage."
 
 just draft golfers, survive the cut, and hope your picks don't implode on sunday.
 
@@ -27,7 +25,7 @@ simple. brutal. beautiful.
 
 ## 🎯 why this exists
 
-a group of friends heard about this game format.
+a group of friends heard about this game format. i wanted to build an app around it.
 
 this project is just a way to:
 
@@ -37,31 +35,24 @@ this project is just a way to:
 - build something fun in the process
 
 it's a side project.  
-it's not a business.  
 it's not trying to replace official fantasy platforms.
-
-it's just cutline.
 
 ## 🧠 important note
 
 i am **not the original creator of this fantasy format**.  
-this repository is simply my own implementation of the concept and something practical for our league.
-
-game formats evolve organically. this is just one implementation of a format we thought of playing.
+this repository is simply my own implementation of the concept to have something concrete to play with.
 
 ## 🛠 tech stack
 
 cutline is built with:
 
 - **backend:** (.net)
-- **database:** relational (sql-based)
+- **database:** relational (currently sqlite, might change)
 - **frontend:** tbd
 - **authentication:** tbd
-- **hosting:** designed to be self-hostable
 
 the backend focuses on a clean and understandable domain model:
 
-- leagues
 - league members
 - draft picks
 - tournaments
@@ -70,7 +61,7 @@ the backend focuses on a clean and understandable domain model:
 
 ## 🖥 self-host friendly by design
 
-cutline is intended to be easy to run yourself.
+cutline is intended to be easy to run yourself with as easy and few configurations as possible.
 
 the ambition is:
 
@@ -83,11 +74,10 @@ if you want to run this for your own league, you should be able to do.
 
 ## 🚧 status
 
-active side project.  
-built for small private leagues.  
+active side project.
 may evolve. may not. that's part of the fun.
 
 ## 📜 license
 
 mit license — use it, fork it, improve it.  
-just don't blame me if your first-round pick misses the cut.
+just don't blame me if your picks misses the cut.
