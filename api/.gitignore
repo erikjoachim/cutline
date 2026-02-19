@@ -17,6 +17,19 @@ appsettings.Local.json
 *.swp
 *.swo
 
+# JetBrains Rider
+.idea/
+/shelf/
+/workspace.xml
+/.idea.Cutline.iml
+/contentModel.xml
+/modules.xml
+/projectSettingsUpdater.xml
+/queries/
+/dataSources/
+/dataSources.local.xml
+/httpRequests/
+
 # NuGet
 *.nupkg
 packages/
