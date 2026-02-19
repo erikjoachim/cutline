@@ -7,6 +7,12 @@ obj/
 *.suo
 *.userprefs
 
+# SQLite
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+
 # Local development settings
 appsettings.Development.json
 appsettings.Local.json
