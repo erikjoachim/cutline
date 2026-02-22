@@ -1,5 +1,5 @@
 using Cutline.Api.Database;
-using Cutline.Api.Infrastructure.Data;
+using Cutline.Api.Integrations.GolfApi;
 using Cutline.Api.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -10,7 +10,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+builder.Services.AddHttpClient<GolfApiClient>(o =>
+{
+    string baseUrl =
+        builder.Configuration["GolfApi:BaseUrl"]
+        ?? throw new NullReferenceException(
+            "GolfApi:BaseUrl is null or not configured in appsettings"
+        );
+    o.BaseAddress = new Uri(baseUrl);
+    o.DefaultRequestHeaders.Add("x-rapidapi-key", builder.Configuration["GolfApi:RapidApiKey"]);
+    o.DefaultRequestHeaders.Add("x-rapidapi-host", builder.Configuration["GolfApi:RapidApiHost"]);
+});
 
 builder.Services.AddOpenApi();
 
