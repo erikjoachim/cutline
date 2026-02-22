@@ -1,4 +1,4 @@
-using Cutline.Api.Domain.Interfaces;
+using Cutline.Api.Database;
 using Cutline.Api.Infrastructure.Data;
 using Cutline.Api.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Scalar.AspNetCore;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
