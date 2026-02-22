@@ -11,6 +11,12 @@ no stroke-by-stroke math.
 
 just draft golfers, survive the cut, and hope your picks don't implode on sunday.
 
+## 🚧⚠️ status
+
+### CURRENTLY SUPER ALHPA
+
+may evolve. may not. that's part of the fun.
+
 ## 🏌️ the format
 
 - draft a team of golfers
@@ -71,11 +77,6 @@ the ambition is:
 - simple configuration via environment variables
 
 if you want to run this for your own league, you should be able to do.
-
-## 🚧 status
-
-active side project.
-may evolve. may not. that's part of the fun.
 
 ## 📜 license
 
