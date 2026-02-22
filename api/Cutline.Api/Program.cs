@@ -1,8 +1,10 @@
 using Cutline.Api.Database;
 using Cutline.Api.Integrations.GolfApi;
-using Cutline.Api.Infrastructure.Repositories;
+using Cutline.Api.Jobs;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using TickerQ.Dashboard.DependencyInjection;
+using TickerQ.DependencyInjection;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,14 @@ builder.Services.AddHttpClient<GolfApiClient>(o =>
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddTickerQ(options =>
+{
+    options.AddDashboard(dashboardOptions =>
+    {
+        dashboardOptions.SetBasePath("/jobs");
+    });
+});
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -32,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference();
 }
+
+app.UseTickerQ();
 
 app.UseHttpsRedirection();
 
