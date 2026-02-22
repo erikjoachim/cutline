@@ -24,6 +24,8 @@ builder.Services.AddHttpClient<GolfApiClient>(o =>
     o.DefaultRequestHeaders.Add("x-rapidapi-host", builder.Configuration["GolfApi:RapidApiHost"]);
 });
 
+builder.Services.AddScoped<FetchPlayersJob>();
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddTickerQ(options =>
