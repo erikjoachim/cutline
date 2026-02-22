@@ -25,6 +25,7 @@ builder.Services.AddHttpClient<GolfApiClient>(o =>
 });
 
 builder.Services.AddScoped<FetchPlayersJob>();
+builder.Services.AddScoped<FetchTournamentsJob>();
 
 builder.Services.AddOpenApi();
 
