@@ -1,4 +1,5 @@
 using Cutline.Api.Database;
+using Cutline.Api.Entities;
 using Cutline.Api.Integrations.GolfApi;
 using Microsoft.EntityFrameworkCore;
 using TickerQ.Utilities.Base;
