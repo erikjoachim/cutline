@@ -17,6 +17,8 @@ just draft golfers, survive the cut, and hope your picks don't implode on sunday
 
 may evolve. may not. that's part of the fun.
 
+breaking changes may occur.
+
 ## 🏌️ the format
 
 - draft a team of golfers
