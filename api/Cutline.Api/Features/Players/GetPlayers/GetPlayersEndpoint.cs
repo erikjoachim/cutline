@@ -1,6 +1,70 @@
+using Cutline.Api.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace Cutline.Api.Features.Players.GetPlayers;
 
-public class GetPlayersEndpoint
+public static class GetPlayersEndpoint
 {
-    
+    public const int DefaultTake = 50;
+    public const int MaxTake = 200;
+
+    public static void MapGetPlayersEndpoint(this IEndpointRouteBuilder app, string baseRoute)
+    {
+        app.MapGet(baseRoute, Handle)
+            .WithName("GetPlayers")
+            .WithSummary("Gets players")
+            .WithTags("Players")
+            .Produces<GetPlayersResponse>();
+    }
+
+    private static async Task<IResult> Handle(
+        AppDbContext dbContext,
+        PlayerSortOrder sortBy = PlayerSortOrder.WorldRanking,
+        int take = DefaultTake
+    )
+    {
+        var effectiveTake = Math.Clamp(take, 1, MaxTake);
+
+        var query = dbContext.Player.AsQueryable();
+
+        query = sortBy switch
+        {
+            PlayerSortOrder.WorldRanking => query.OrderBy(p => p.CurrentWorldRank),
+            PlayerSortOrder.FullName => query.OrderBy(p => p.FullName),
+            _ => query.OrderBy(p => p.CurrentWorldRank),
+        };
+
+        var players = await query
+            .Take(effectiveTake)
+            .Select(p => new GetPlayersDto(
+                p.ExternalSystemId,
+                p.FullName,
+                p.CurrentWorldRank,
+                PlayerImageUrlHelper(p.ExternalSystemId)
+            ))
+            .ToListAsync();
+
+        var response = new GetPlayersResponse(players);
+        return Results.Ok(response);
+    }
+
+    private sealed record GetPlayersDto(
+        int Id,
+        string FullName,
+        int WorldRanking,
+        string ProfileImageUrl
+    );
+
+    private sealed record GetPlayersResponse(IReadOnlyList<GetPlayersDto> Players);
+
+    private static string PlayerImageUrlHelper(int playerId)
+    {
+        return $"https://pga-tour-res.cloudinary.com/image/upload/c_fill,g_face:center,q_auto,f_auto,dpr_2.0,h_220,w_200,d_stub:default_avatar_light.webp/headshots_{playerId}";
+    }
+}
+
+public enum PlayerSortOrder
+{
+    WorldRanking,
+    FullName,
 }
