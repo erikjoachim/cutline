@@ -8,11 +8,14 @@ public class Player
 
     public int ExternalSystemId { get; set; }
 
-    [MaxLength(64)] public required string FirstName { get; set; }
+    [MaxLength(64)]
+    public required string FirstName { get; set; }
 
-    [MaxLength(64)] public required string LastName { get; set; }
+    [MaxLength(64)]
+    public required string LastName { get; set; }
 
-    [MaxLength(128)] public required string FullName { get; set; }
+    [MaxLength(128)]
+    public required string FullName { get; set; }
 
     public int CurrentWorldRank { get; set; }
     public int PreviousWorldRank { get; set; }

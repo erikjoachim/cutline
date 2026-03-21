@@ -6,9 +6,11 @@ public class Tournament
 {
     public int Id { get; set; }
 
-    [MaxLength(32)] public required string ExternalTournamentId { get; set; }
+    [MaxLength(32)]
+    public required string ExternalTournamentId { get; set; }
 
-    [MaxLength(128)] public required string Name { get; set; }
+    [MaxLength(128)]
+    public required string Name { get; set; }
 
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
