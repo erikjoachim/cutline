@@ -43,7 +43,38 @@ dotnet test --filter "FullyQualifiedName~TestName"
 dotnet test --collect:"XPlat Code Coverage"
 ```
 
+## Commit Message Standards
+
+### Format
+Use lowercase with conventional format: `<type>: <description>`
+
+Types:
+- `feat` - New feature
+- `refactor` - Code organization changes
+- `fix` - Bug fixes
+- `chore` - Maintenance, tooling
+- `format` - Code formatting only
+- `docs` - Documentation changes
+
+### Scoping
+For projects with multiple components, include scope:
+- `feat(api): add GetLeagues endpoint`
+- `feat(db): add LeagueTeamsNavigationProp migration`
+- `refactor(web): simplify LeagueList component`
+
+### Large Changes
+- Break into logical smaller commits when possible
+- If a change touches multiple scopes, use multiple commits
+- For large commits, add body lines for context
+
+### Writing Messages
+1. Run `git diff --staged` to see exactly what changed
+2. Focus on **what** changed and **why**
+3. Keep under 72 characters for the first line
+4. Use past tense: "add" not "adding"
+
 ### Code Quality
+
 ```bash
 # Format all C# files with CSharpier
 dotnet csharpier .
