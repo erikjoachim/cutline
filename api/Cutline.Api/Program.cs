@@ -35,6 +35,7 @@ builder.Services.AddTickerQ(options =>
     options.AddDashboard(dashboardOptions =>
     {
         dashboardOptions.SetBasePath("/jobs");
+        dashboardOptions.SetGroupName("ticker-jobs");
     });
 });
 
