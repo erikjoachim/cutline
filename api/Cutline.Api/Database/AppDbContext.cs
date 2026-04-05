@@ -8,6 +8,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Player> Player { get; set; }
     public DbSet<Tournament> Tournament { get; set; }
     public DbSet<User> User { get; set; }
+    public DbSet<League> League { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
