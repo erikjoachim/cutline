@@ -30,7 +30,7 @@ namespace Cutline.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("League");
+                    b.ToTable("League", (string)null);
                 });
 
             modelBuilder.Entity("Cutline.Api.Entities.Player", b =>
@@ -79,7 +79,7 @@ namespace Cutline.Api.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Player");
+                    b.ToTable("Player", (string)null);
                 });
 
             modelBuilder.Entity("Cutline.Api.Entities.Team", b =>
@@ -105,7 +105,7 @@ namespace Cutline.Api.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Team");
+                    b.ToTable("Team", (string)null);
                 });
 
             modelBuilder.Entity("Cutline.Api.Entities.Tournament", b =>
@@ -141,7 +141,7 @@ namespace Cutline.Api.Migrations
                     b.HasIndex("ExternalTournamentId")
                         .IsUnique();
 
-                    b.ToTable("Tournament");
+                    b.ToTable("Tournament", (string)null);
                 });
 
             modelBuilder.Entity("Cutline.Api.Entities.User", b =>
@@ -162,7 +162,7 @@ namespace Cutline.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Cutline.Api.Entities.Player", b =>
@@ -187,14 +187,14 @@ namespace Cutline.Api.Migrations
                     b.Navigation("Owner");
                 });
 
-            modelBuilder.Entity("Cutline.Api.Entities.League", b =>
-                {
-                    b.Navigation("Teams");
-                });
-
             modelBuilder.Entity("Cutline.Api.Entities.Team", b =>
                 {
                     b.Navigation("Players");
+                });
+
+            modelBuilder.Entity("Cutline.Api.Entities.League", b =>
+                {
+                    b.Navigation("Teams");
                 });
 #pragma warning restore 612, 618
         }

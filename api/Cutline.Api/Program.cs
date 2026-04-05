@@ -1,4 +1,5 @@
 using Cutline.Api.Database;
+using Cutline.Api.Features.Leagues;
 using Cutline.Api.Features.Players;
 using Cutline.Api.Features.Teams;
 using Cutline.Api.Integrations.GolfApi;
@@ -50,6 +51,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapPlayersEndpoints();
+
+app.MapLeaguesEndpoints();
 
 app.MapTeamsEndpoints();
 
