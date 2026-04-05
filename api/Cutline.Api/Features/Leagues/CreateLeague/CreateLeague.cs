@@ -18,6 +18,4 @@ public static class CreateLeague
     public sealed record CreateLeagueRequest(string Name);
 
     public sealed record CreateLeagueResponse(Guid Id, string Name);
-
-    public sealed record TeamDto(Guid Id, string Name);
 }
