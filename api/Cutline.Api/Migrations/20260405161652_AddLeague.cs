@@ -16,19 +16,19 @@ namespace Cutline.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_League", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "League");
+            migrationBuilder.DropTable(name: "League");
         }
     }
 }

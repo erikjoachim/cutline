@@ -15,7 +15,8 @@ namespace Cutline.Api.Migrations
                 name: "TeamId",
                 table: "Player",
                 type: "TEXT",
-                nullable: true);
+                nullable: true
+            );
 
             migrationBuilder.CreateTable(
                 name: "Team",
@@ -24,7 +25,7 @@ namespace Cutline.Api.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 64, nullable: false),
                     OwnerId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    LeagueId = table.Column<Guid>(type: "TEXT", nullable: true)
+                    LeagueId = table.Column<Guid>(type: "TEXT", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -33,54 +34,50 @@ namespace Cutline.Api.Migrations
                         name: "FK_Team_League_LeagueId",
                         column: x => x.LeagueId,
                         principalTable: "League",
-                        principalColumn: "Id");
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Team_User_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "User",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Player_TeamId",
                 table: "Player",
-                column: "TeamId");
+                column: "TeamId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Team_LeagueId",
                 table: "Team",
-                column: "LeagueId");
+                column: "LeagueId"
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Team_OwnerId",
-                table: "Team",
-                column: "OwnerId");
+            migrationBuilder.CreateIndex(name: "IX_Team_OwnerId", table: "Team", column: "OwnerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Player_Team_TeamId",
                 table: "Player",
                 column: "TeamId",
                 principalTable: "Team",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Player_Team_TeamId",
-                table: "Player");
+            migrationBuilder.DropForeignKey(name: "FK_Player_Team_TeamId", table: "Player");
 
-            migrationBuilder.DropTable(
-                name: "Team");
+            migrationBuilder.DropTable(name: "Team");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Player_TeamId",
-                table: "Player");
+            migrationBuilder.DropIndex(name: "IX_Player_TeamId", table: "Player");
 
-            migrationBuilder.DropColumn(
-                name: "TeamId",
-                table: "Player");
+            migrationBuilder.DropColumn(name: "TeamId", table: "Player");
         }
     }
 }
