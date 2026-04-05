@@ -10,6 +10,13 @@ public static class LeaguesEndpoints
             .WithTags("Leagues")
             .Produces<GetLeagues.GetLeaguesResponse>();
 
+        app.MapGet("/api/leagues/{id}", GetLeagueById.Handle)
+            .WithName("GetLeagueById")
+            .WithSummary("Gets a league by ID")
+            .WithTags("Leagues")
+            .Produces<GetLeagueById.GetLeagueByIdResponse>()
+            .Produces(StatusCodes.Status404NotFound);
+
         app.MapPost("/api/leagues", CreateLeague.Handle)
             .WithName("CreateLeague")
             .WithSummary("Creates a league")
