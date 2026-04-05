@@ -9,5 +9,12 @@ public static class LeaguesEndpoints
             .WithSummary("Gets leagues")
             .WithTags("Leagues")
             .Produces<GetLeagues.GetLeaguesResponse>();
+
+        app.MapPost("/api/leagues", CreateLeague.Handle)
+            .WithName("CreateLeague")
+            .WithSummary("Creates a league")
+            .WithTags("Leagues")
+            .Produces<CreateLeague.CreateLeagueResponse>()
+            .Produces(StatusCodes.Status400BadRequest);
     }
 }
