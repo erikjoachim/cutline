@@ -132,20 +132,43 @@ dotnet ef migrations remove
 - **Async methods**: Prefer async EF methods (`ToListAsync`, `FirstOrDefaultAsync`, etc.)
 
 ### API Endpoints Pattern
-Use minimal APIs with extension methods for endpoint organization:
+Use domain-level aggregator files with action classes in the same namespace:
+
 ```csharp
-public static class GetPlayersEndpoint
+// Features/Players/PlayersEndpoints.cs - Aggregator (one per domain)
+public static class PlayersEndpoints
 {
-    public static void MapGetPlayersEndpoint(this IEndpointRouteBuilder app, string baseRoute)
+    public static void MapPlayersEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapGet(baseRoute, Handle)
+        app.MapGet("/api/players", GetPlayers.Handle)
             .WithName("GetPlayers")
             .WithSummary("Gets players")
             .WithTags("Players")
-            .Produces<GetPlayersResponse>();
+            .Produces<GetPlayers.GetPlayersResponse>();
+
+        app.MapPost("/api/players", CreatePlayer.Handle)
+            .WithTags("Players");
     }
 }
+
+// Features/Players/GetPlayers.cs - Action class (same namespace)
+public static class GetPlayers
+{
+    public static async Task<IResult> Handle(AppDbContext db)
+    {
+        // ...
+    }
+
+    public sealed record GetPlayersResponse(IReadOnlyList<PlayerDto> Players);
+}
 ```
+
+**Key points:**
+- Each domain has an aggregator file (`PlayersEndpoints.cs`)
+- Aggregator calls `MapGet`, `MapPost`, etc. directly with hardcoded routes
+- Action classes (`GetPlayers`, `CreatePlayer`) have `public static Handle` methods
+- All types in same namespace for easy access
+- Program.cs calls `app.MapPlayersEndpoints()` (no parameters)
 
 ### Attribute Usage
 - Use `[JsonPropertyName("camelCase")]` for JSON serialization (explicit control)
@@ -169,10 +192,10 @@ This project follows **Clean Architecture** principles with **Vertical Slice** o
 Cutline.Api/
 ├── Database/         # AppDbContext, EF configuration
 ├── Entities/         # Domain models (Player, Tournament)
-├── Features/         # Vertical slices by domain feature
-│   └── [Feature]/
-│       └── [Action]/  # e.g., Players/GetPlayers/
-│           └── *.cs   # Endpoint + DTOs in same file
+├── Features/         # Vertical slices by domain
+│   └── [Domain]/     # e.g., Players, Teams
+│       ├── [Domain]Endpoints.cs   # Aggregator - maps all routes
+│       └── [Action].cs            # Action class + DTOs (e.g., GetPlayers.cs)
 ├── Integrations/      # External clients (GolfApiClient)
 ├── Jobs/             # Background jobs (TickerQ)
 └── Migrations/       # EF migrations
@@ -181,10 +204,10 @@ Cutline.Api/
 ## Common Tasks
 
 ### Adding a New Endpoint
-1. Create feature folder: `Features/Players/GetPlayers/`
-2. Create endpoint file: `GetPlayersEndpoint.cs`
-3. Put endpoint class, DTOs, and helper records in the same file
-4. Map in `Program.cs`: `app.MapGetPlayersEndpoint("/api/players");`
+1. Create action file in domain folder: `Features/Players/GetPlayers.cs`
+2. Add action class with `public static Handle` method and DTOs
+3. Add route to aggregator: `Features/Players/PlayersEndpoints.cs`
+4. Call in `Program.cs`: `app.MapPlayersEndpoints();`
 
 ### Adding a New Entity
 1. Create file in `Entities/`: `Player.cs`

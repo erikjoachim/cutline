@@ -1,23 +1,14 @@
 using Cutline.Api.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cutline.Api.Features.Players.GetPlayers;
+namespace Cutline.Api.Features.Players;
 
-public static class GetPlayersEndpoint
+public static class GetPlayers
 {
     public const int DefaultTake = 50;
     public const int MaxTake = 200;
 
-    public static void MapGetPlayersEndpoint(this IEndpointRouteBuilder app, string baseRoute)
-    {
-        app.MapGet(baseRoute, Handle)
-            .WithName("GetPlayers")
-            .WithSummary("Gets players")
-            .WithTags("Players")
-            .Produces<GetPlayersResponse>();
-    }
-
-    private static async Task<IResult> Handle(
+    public static async Task<IResult> Handle(
         AppDbContext dbContext,
         PlayerSortOrder sortBy = PlayerSortOrder.WorldRanking,
         int take = DefaultTake
@@ -48,14 +39,14 @@ public static class GetPlayersEndpoint
         return Results.Ok(response);
     }
 
-    private sealed record GetPlayersDto(
+    public sealed record GetPlayersDto(
         int Id,
         string FullName,
         int WorldRanking,
         string ProfileImageUrl
     );
 
-    private sealed record GetPlayersResponse(IReadOnlyList<GetPlayersDto> Players);
+    public sealed record GetPlayersResponse(IReadOnlyList<GetPlayersDto> Players);
 
     private static string PlayerImageUrlHelper(int playerId)
     {

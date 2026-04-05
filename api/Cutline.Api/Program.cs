@@ -1,5 +1,6 @@
 using Cutline.Api.Database;
-using Cutline.Api.Features.Players.GetPlayers;
+using Cutline.Api.Features.Players;
+using Cutline.Api.Features.Teams;
 using Cutline.Api.Integrations.GolfApi;
 using Cutline.Api.Jobs;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,9 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference();
 }
 
-app.MapGetPlayersEndpoint(baseRoute: "/api/players");
+app.MapPlayersEndpoints();
+
+app.MapTeamsEndpoints();
 
 app.UseTickerQ();
 
